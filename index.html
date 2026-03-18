@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M.R. Winterburn — A message to the Green Party</title>
+<meta name="description" content="The Green Party needs a Head of AI. A message from M.R. Winterburn.">
+<meta property="og:title" content="M.R. Winterburn — A message to the Green Party">
+<meta property="og:description" content="The old world is ending. The Green Party needs a Head of AI.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0f0a;
+    --bg-mid: #0f160f;
+    --green-deep: #1a3a1a;
+    --green-mid: #2d5a2d;
+    --green-bright: #4a9e4a;
+    --green-vivid: #6abf6a;
+    --green-pale: #a8d5a8;
+    --cream: #f0ebe0;
+    --cream-dim: #c8c0b0;
+    --white: #ffffff;
+    --rule: rgba(74, 158, 74, 0.2);
+    --rule-bright: rgba(74, 158, 74, 0.5);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.8;
+    font-size: 18px;
+    overflow-x: hidden;
+  }
+
+  /* PROGRESS BAR */
+  #progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    width: 0%;
+    background: linear-gradient(90deg, var(--green-bright), var(--green-vivid));
+    z-index: 1000;
+    transition: width 0.1s linear;
+  }
+
+  /* NOISE TEXTURE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 40px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: var(--rule-bright);
+  }
+
+  .hero-bg-circle {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(74,158,74,0.06) 0%, transparent 70%);
+    top: 50%;
+    right: -100px;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  .byline {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--green-vivid);
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.2s;
+  }
+
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(48px, 8vw, 96px);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--white);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.4s;
+  }
+
+  .hero-name span {
+    color: var(--green-vivid);
+  }
+
+  .hero-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(18px, 3vw, 26px);
+    color: var(--cream-dim);
+    max-width: 560px;
+    margin-bottom: 64px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.6s;
+  }
+
+  .hero-scroll-hint {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--green-bright);
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 1s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero-scroll-hint::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--green-bright);
+    animation: pulse 2s ease infinite;
+  }
+
+  /* SECTIONS */
+  .section {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 100px 40px;
+    position: relative;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .section-rule {
+    width: 40px;
+    height: 2px;
+    background: var(--green-bright);
+    margin-bottom: 48px;
+  }
+
+  /* TYPOGRAPHY */
+  .lead {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--white);
+    margin-bottom: 32px;
+    letter-spacing: -0.01em;
+  }
+
+  .lead em {
+    font-style: italic;
+    color: var(--green-vivid);
+  }
+
+  p {
+    color: var(--cream-dim);
+    margin-bottom: 24px;
+    font-size: clamp(16px, 2vw, 19px);
+    line-height: 1.85;
+  }
+
+  p strong {
+    color: var(--cream);
+    font-weight: 500;
+  }
+
+  p em {
+    color: var(--green-pale);
+    font-style: italic;
+  }
+
+  /* PULL QUOTES */
+  .pull-quote {
+    border-left: 3px solid var(--green-bright);
+    padding: 8px 0 8px 32px;
+    margin: 48px 0;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(20px, 3vw, 28px);
+    font-style: italic;
+    color: var(--white);
+    line-height: 1.4;
+  }
+
+  /* STAT BLOCKS */
+  .stat-row {
+    display: flex;
+    gap: 40px;
+    margin: 48px 0;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    flex: 1;
+    min-width: 140px;
+  }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 900;
+    color: var(--green-vivid);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--cream-dim);
+  }
+
+  /* THE ROLE BLOCK */
+  .role-block {
+    background: var(--green-deep);
+    border: 1px solid var(--rule-bright);
+    padding: 48px;
+    margin: 48px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .role-block::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--green-bright), transparent);
+  }
+
+  .role-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--green-vivid);
+    margin-bottom: 24px;
+  }
+
+  .role-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 900;
+    color: var(--white);
+    margin-bottom: 32px;
+    line-height: 1.1;
+  }
+
+  .role-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .role-list li {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: clamp(15px, 2vw, 17px);
+    color: var(--cream-dim);
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .role-list li:last-child { border-bottom: none; }
+
+  .role-list li::before {
+    content: '→';
+    color: var(--green-bright);
+    font-family: 'DM Mono', monospace;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* CLOSING */
+  .closing {
+    text-align: center;
+    padding: 120px 40px;
+    position: relative;
+  }
+
+  .closing-statement {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.2;
+    max-width: 640px;
+    margin: 0 auto 24px;
+    letter-spacing: -0.02em;
+  }
+
+  .closing-statement em {
+    color: var(--green-vivid);
+    font-style: italic;
+  }
+
+  .closing-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    color: var(--green-bright);
+    margin-bottom: 64px;
+  }
+
+  /* BIO */
+  .bio {
+    max-width: 560px;
+    margin: 0 auto 64px;
+    padding-top: 48px;
+    border-top: 1px solid var(--rule);
+    text-align: left;
+  }
+
+  .bio p {
+    font-size: 15px;
+    color: var(--cream-dim);
+    line-height: 1.7;
+    margin-bottom: 8px;
+  }
+
+  .bio-name {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--green-vivid);
+    margin-bottom: 16px;
+  }
+
+  /* SHARE BUTTONS */
+  .share-section {
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 0 40px 120px;
+  }
+
+  .share-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--green-bright);
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .share-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .share-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 24px;
+    border: 1px solid var(--rule-bright);
+    background: transparent;
+    color: var(--cream);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .share-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--green-deep);
+    transform: translateX(-100%);
+    transition: transform 0.2s ease;
+    z-index: -1;
+  }
+
+  .share-btn:hover {
+    border-color: var(--green-vivid);
+    color: var(--white);
+  }
+
+  .share-btn:hover::before {
+    transform: translateX(0);
+  }
+
+  .share-btn svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+    flex-shrink: 0;
+  }
+
+  .share-btn.primary {
+    background: var(--green-bright);
+    border-color: var(--green-bright);
+    color: var(--bg);
+    font-weight: 500;
+  }
+
+  .share-btn.primary:hover {
+    background: var(--green-vivid);
+    border-color: var(--green-vivid);
+  }
+
+  .share-btn.primary::before { display: none; }
+
+  /* DIVIDER */
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: var(--rule);
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* MOBILE */
+  @media (max-width: 600px) {
+    .hero { padding: 60px 24px; }
+    .section { padding: 72px 24px; }
+    .role-block { padding: 32px 24px; }
+    .stat-row { gap: 24px; }
+    .share-section { padding: 0 24px 80px; }
+    .closing { padding: 80px 24px; }
+    .share-buttons { flex-direction: column; align-items: stretch; }
+    .share-btn { justify-content: center; }
+  }
+
+  /* COPY CONFIRMATION */
+  .copy-confirm {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--green-bright);
+    color: var(--bg);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    padding: 12px 24px;
+    opacity: 0;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  .copy-confirm.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+<div class="copy-confirm" id="copyConfirm">Link copied</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-circle"></div>
+  <div class="byline">A message to the Green Party</div>
+  <h1 class="hero-name">M.R.<br><span>Winterburn</span></h1>
+  <p class="hero-subtitle">The old world is ending.<br>The question is what fills the vacuum.</p>
+  <div class="hero-scroll-hint">Read on</div>
+</section>
+
+<!-- SECTION 1: THE SIGNAL -->
+<section class="section">
+  <div class="section-rule"></div>
+  <h2 class="lead">Not metaphorically.</h2>
+  <p>The US/Israel war on Iran is not an isolated conflict. It is a signal. The post-war order — the one that shaped every political assumption your party was built inside — is cracking along fault lines that have been accumulating stress for thirty years.</p>
+  <p>What fills the vacuum matters enormously.</p>
+  <p>Right now the answer is: rhetoric. Corruption. Strongmen. The last gasps of a two-party adversarial system that was already a poor fit for the complexity of the world it was supposed to govern.</p>
+  <div class="pull-quote">You can hear it creaking.</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 2: THE THRESHOLD -->
+<section class="section">
+  <div class="section-rule"></div>
+  <h2 class="lead">The Green Party is at a <em>threshold.</em></h2>
+
+  <div class="stat-row">
+    <div class="stat">
+      <div class="stat-number">216k</div>
+      <div class="stat-label">Members</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">2nd</div>
+      <div class="stat-label">In national polling</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">4</div>
+      <div class="stat-label">MPs</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">1st</div>
+      <div class="stat-label">By-election victory</div>
+    </div>
+  </div>
+
+  <p>This is not normal. This has never happened before.</p>
+  <p>The question is not whether the Greens are growing. They are. The question is whether the party is ready to convert that growth into something that changes the country — and possibly arrives at exactly the right moment to help shape what comes next.</p>
+  <p>That requires a different kind of thinking.</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 3: HOPE TO PROGRESS -->
+<section class="section">
+  <div class="section-rule"></div>
+  <h2 class="lead">Hope was the right word.<br>For the moment it named.</h2>
+  <p>But the Green Party is past hope now.</p>
+  <p>Hope is what you hold onto when you're outside. The Greens are no longer outside. They are arriving — at a moment of geopolitical instability, institutional collapse, and a public that is looking, perhaps for the first time seriously, for a different kind of politics.</p>
+  <div class="pull-quote">The word for this moment is <em>progress.</em></div>
+  <p>Not the managed, centrist, third-way progress that discredited itself in the nineties. Not technocratic optimism. Not growth for its own sake.</p>
+  <p>Progress as in: <strong>we know where we're going, we know how to get there, and we're taking you with us.</strong></p>
+  <p>That requires infrastructure the Green Party does not yet have.</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 4: THE GENERATIONAL TENSION -->
+<section class="section">
+  <div class="section-rule"></div>
+  <h2 class="lead">A tension the party hasn't fully <em>named.</em></h2>
+  <p>The new members are young. Digital. They have grown up inside systems that the party's current communication architecture was not built for. They are not waiting to be persuaded — they are waiting to be organised.</p>
+  <p>The active infrastructure — the committees, the working groups, the policy machinery — was built by people with deep political commitment and real experience. But a different relationship with technology. A different relationship with AI specifically.</p>
+  <p>This is not a criticism. It is a structural observation. And it is urgent.</p>
+  <p>Because AI is not coming. <strong>It is here.</strong> It is already reshaping healthcare, public services, democratic participation, the information environment that politics itself operates in, and the nature of warfare — as Iran is demonstrating in real time.</p>
+  <p>The Green Party needs to decide what it thinks. Not in a vague, concerned way. Seriously. Philosophically. Practically.</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 5: EDUCATE OURSELVES -->
+<section class="section">
+  <div class="section-rule"></div>
+  <h2 class="lead">Our first responsibility is to educate <em>ourselves.</em></h2>
+  <p>Not to adopt AI uncritically. Not to reject it reflexively. To understand it — what it actually does, what it cannot do, what it makes possible and what it forecloses.</p>
+  <p>I work with large language models daily. I lead digital transformation for an NHS Primary Care Network serving 77,000 patients in Dorset. I have watched what happens when technology meets human institutions under pressure — when the gap between what a system knows and what a person feels becomes the thing that determines whether care lands or fails.</p>
+  <p>The missing layer isn't more content, more policy, more evidence. It's understanding the emotional climate someone is arriving in before you try to move them. I call this Emotional Architecture. Not manipulation — the opposite. An act of respect that most political communication withholds. The Greens, more than any party, have the values base to do this authentically. But values without infrastructure plateaus.</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 6: SCALE -->
+<section class="section">
+  <div class="section-rule"></div>
+  <h2 class="lead">You can train a hundred canvassers.<br>You cannot train <em>216,000 members.</em></h2>
+  <p>Unless you build tools.</p>
+  <p>Not chatbots. Not automated content. Not any of the shallow applications that discredit the technology. Genuine infrastructure — tools that help the party understand the emotional landscape of specific communities. Tools that help candidates frame policy positions for specific human contexts. Tools that give canvassers real-time support grounded in actual local knowledge.</p>
+  <div class="pull-quote">Nobody in British politics is doing this. Not seriously.</div>
+  <p>Not with the philosophical depth, psychological grounding, and technical capability to do it well.</p>
+  <p>That is the white space.</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 7: GAME THEORY -->
+<section class="section">
+  <div class="section-rule"></div>
+  <h2 class="lead">I have been thinking about <em>Game Theory.</em></h2>
+  <p>It sounds impossible — using strategic decision modelling to get the Greens into power. But so was the four minute mile. So were most things that changed the shape of what was thinkable.</p>
+  <p>The two-party system is not a law of nature. It is a Nash equilibrium that holds until the conditions that sustain it shift. Those conditions are shifting — faster than most people inside the system have noticed.</p>
+  <p>The Green Party, if it moves with intellectual rigour and strategic precision at exactly this moment, is not just a protest movement with good values. It is a serious political force arriving at the right time.</p>
+  <p>But only if it thinks like one.</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 8: THE ROLE -->
+<section class="section">
+  <div class="section-rule"></div>
+  <h2 class="lead">The Green Party needs a <em>Head of AI.</em></h2>
+  <p>Not a digital communications manager. Not a tech advisor.</p>
+
+  <div class="role-block">
+    <div class="role-tag">The role</div>
+    <div class="role-title">Head of AI</div>
+    <ul class="role-list">
+      <li>Develop Green AI policy from first principles — not borrowed from think tanks, not reactive to Labour or the Tories. Original, grounded, philosophically coherent.</li>
+      <li>Build internal tools that make the party smarter and faster without losing its grassroots character.</li>
+      <li>Bridge the generational gap between new members and experienced organisers.</li>
+      <li>Position the Greens as the only political force in Britain thinking seriously about AI governance from a genuinely human-centred perspective.</li>
+    </ul>
+  </div>
+
+  <p>No other party has this. No other party could do it authentically.</p>
+  <p>The Greens can.</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- SECTION 9: THE PARTY -->
+<section class="section">
+  <div class="section-rule"></div>
+  <h2 class="lead">Not just for the well-meaning<br>and the climate conscious.</h2>
+  <p>For the thinkers. The introverts. The people who have been watching the old system fail and waiting — not with hope exactly, but with a kind of patient readiness — for something serious to arrive.</p>
+  <p>That party is possible.</p>
+</section>
+
+<!-- CLOSING -->
+<div class="closing">
+  <div class="closing-statement">The question is whether this is the moment someone decides to <em>build it properly.</em></div>
+  <div class="closing-sub">M.R. Winterburn — Isle of Portland, Dorset — 2026</div>
+
+  <div class="bio">
+    <div class="bio-name">About</div>
+    <p>M.R. Winterburn has spent thirty years inside institutions at the moment they had to change — television broadcast, the NHS, and the particular pressure of a small island community learning to think differently about itself.</p>
+    <p>He is a member of the Green Party.</p>
+  </div>
+</div>
+
+<!-- SHARE -->
+<div class="share-section">
+  <div class="share-label">Share this</div>
+  <div class="share-buttons">
+
+    <!-- WhatsApp -->
+    <a class="share-btn primary" id="whatsappBtn" href="#" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      WhatsApp
+    </a>
+
+    <!-- Email -->
+    <a class="share-btn" id="emailBtn" href="#" target="_blank">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+      Email
+    </a>
+
+    <!-- Copy link -->
+    <button class="share-btn" id="copyBtn">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+      Copy link
+    </button>
+
+  </div>
+</div>
+
+<script>
+  // PROGRESS BAR
+  const bar = document.getElementById('progress-bar');
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    bar.style.width = pct + '%';
+  });
+
+  // SCROLL REVEAL
+  const sections = document.querySelectorAll('.section');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+  sections.forEach(s => observer.observe(s));
+
+  // SHARE URL — update this to your Netlify URL when deployed
+  const SHARE_URL = window.location.href;
+  const SHARE_TEXT = 'The Green Party needs a Head of AI. Worth reading.';
+
+  // WHATSAPP
+  document.getElementById('whatsappBtn').href =
+    'https://wa.me/?text=' + encodeURIComponent(SHARE_TEXT + ' ' + SHARE_URL);
+
+  // EMAIL
+  document.getElementById('emailBtn').href =
+    'mailto:?subject=' + encodeURIComponent('The Green Party needs a Head of AI') +
+    '&body=' + encodeURIComponent('Worth reading.\n\n' + SHARE_URL);
+
+  // COPY LINK
+  const copyBtn = document.getElementById('copyBtn');
+  const copyConfirm = document.getElementById('copyConfirm');
+  copyBtn.addEventListener('click', () => {
+    navigator.clipboard.writeText(SHARE_URL).then(() => {
+      copyConfirm.classList.add('show');
+      setTimeout(() => copyConfirm.classList.remove('show'), 2000);
+    });
+  });
+</script>
+
+</body>
+</html>
